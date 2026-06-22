@@ -52,15 +52,20 @@
         .load-bar-wrap { width:220px; height:4px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; }
         .load-bar { height:100%; width:0%; background:linear-gradient(90deg,var(--red2),var(--red)); border-radius:99px; transition: width 0.4s ease; }
         .load-status { font-size:12px; color:var(--muted); letter-spacing:1px; }
-
-        /* ── LOCK ── */
+        /* ── LOCK SCREEN BACKGROUND ── */
         #lockScreen {
-            position: fixed; inset: 0; z-index: 9998;
+            position: fixed; 
+            inset: 0; 
+            z-index: 9998;
             background: radial-gradient(ellipse at 50% 20%, #2a080c 0%, var(--dark) 65%);
-            display: none; flex-direction: column;
-            align-items: center; justify-content: center; padding: 28px 20px;
+            display: none; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            padding: 28px 20px;
         }
-                /* ── LOCK LOGO WITH NEON GLOW ── */
+
+        /* ── LOCK LOGO WITH NEON GLOW ── */
         .lock-logo-ring {
             width: 100px;
             height: 100px;
@@ -73,19 +78,32 @@
             animation: lockGlow 2s infinite;
             transition: all 0.4s ease;
         }
+
         @keyframes lockGlow {
-            0%, 100% { box-shadow: 0 0 30px rgba(255, 61, 90, 0.3); }
-            50% { box-shadow: 0 0 60px rgba(255, 61, 90, 0.6); border-color: #ff0026; }
-    
-        /* ID Box */
-        .id-box {
-            width:100%; max-width:340px;
-            background: rgba(255,61,90,0.05);
-            border: 1.5px solid var(--red);
-            border-radius: 16px; padding: 18px 20px;
-            text-align: center; margin-bottom: 16px;
-            position: relative;
+            0%, 100% { 
+                box-shadow: 0 0 30px rgba(255, 61, 90, 0.3); 
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(255, 61, 90, 0.6); 
+                border-color: #ff0026; 
+            }
         }
+
+        /* ── ID BOX ── */
+        .id-box {
+            width: 100%; 
+            max-width: 340px;
+            background: rgba(255, 61, 90, 0.05);
+            border: 1.5px solid var(--red);
+            border-radius: 16px; 
+            padding: 18px 20px;
+            text-align: center; 
+            margin-bottom: 16px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        
+        
         .id-box-label { font-size:10px; color:var(--muted); letter-spacing:2px; margin-bottom:10px; text-transform:uppercase; }
         .id-number {
             font-family:'Orbitron',sans-serif; font-size:17px; font-weight:700;
