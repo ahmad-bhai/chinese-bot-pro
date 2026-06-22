@@ -265,7 +265,64 @@
             pointer-events:none; white-space:nowrap;
         }
         #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
+        /* ── TELEGRAM CONTACTS UI ── */
+        .contact-wrap {
+            width: 100%;
+            max-width: 340px;
+            margin-top: 16px;
+            text-align: center;
+        }
+        .contact-label {
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            text-align: left;
+            padding-left: 4px;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        /* Admin Button Style */
+        .tg-admin {
+            background: rgba(255, 61, 90, 0.08);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+        }
+        .tg-admin:hover, .tg-admin:active {
+            background: rgba(255, 61, 90, 0.15);
+            border-color: var(--red);
+            box-shadow: 0 0 15px rgba(255, 61, 90, 0.2);
+            transform: scale(0.98);
+        }
+        /* Channel Button Style */
+        .tg-channel {
+            background: linear-gradient(135deg, #1d2733, #243447);
+            border: 1.5px solid #229ED9;
+            color: #229ED9;
+            text-shadow: 0 0 10px rgba(34, 158, 217, 0.3);
+        }
+        .tg-channel:hover, .tg-channel:active {
+            background: #229ED9;
+            color: #070b14;
+            text-shadow: none;
+            box-shadow: 0 0 20px rgba(34, 158, 217, 0.4);
+            transform: scale(0.98);
+        }
+        
         .popup-overlay {
             position:fixed; inset:0; z-index:5000;
             background:rgba(7,11,20,0.85); backdrop-filter:blur(8px);
