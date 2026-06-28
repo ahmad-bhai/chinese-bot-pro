@@ -440,6 +440,7 @@
                     <div class="select-drop" id="timeDrop"></div>
                 </div>
             </div>
+            <button class="copy-btn" style="margin-top: 8px; font-size: 14px; padding: 14px; box-shadow: 0 0 15px rgba(255,61,90,0.3);" onclick="requestSignal()">⚡ GET SIGNAL</button>
         </div>
 
         <div class="signal-wrap">
@@ -490,12 +491,19 @@
 
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup">
-            <div class="popup-icon" id="popIcon">📈</div>
-            <div class="popup-title">NEW SIGNAL</div>
-            <div class="popup-pair" id="popDir">UP</div>
-            <div class="popup-body" style="font-weight:600;" id="popPairName">---</div>
-            <div class="popup-body" id="popDur" style="color:var(--muted); font-size:12px; margin-top:-10px;">Duration: --</div>
-            <button class="popup-btn" onclick="closePopup()">GOT IT ✓</button>
+            <div id="popupLoadingState">
+                <div class="pending-spinner" style="width: 35px; height: 35px; margin-bottom: 12px;"></div>
+                <div class="popup-title" style="letter-spacing: 2px;">ANALYZING MARKET...</div>
+                <div class="popup-pair" id="popupPrepSeconds" style="color: var(--text); font-size: 26px; margin: 15px 0;">5s</div>
+            </div>
+            <div id="popupSignalState" style="display: none;">
+                <div class="popup-icon" id="popIcon">📈</div>
+                <div class="popup-title">NEW SIGNAL</div>
+                <div class="popup-pair" id="popDir">UP</div>
+                <div class="popup-body" style="font-weight:600;" id="popPairName">---</div>
+                <div class="popup-body" id="popDur" style="color:var(--muted); font-size:12px; margin-top:-10px;">Duration: --</div>
+                <button class="popup-btn" onclick="closePopupAndStartTrade()">GOT IT ✓</button>
+            </div>
         </div>
     </div>
 
@@ -684,7 +692,7 @@
             document.getElementById('pairBtn').classList.remove('open'); 
             document.querySelectorAll('#pairDrop .drop-item').forEach(d => d.classList.toggle('active', d.textContent === p)); 
             saveSelection(); 
-            if (selPair && selTime) triggerNewRandomSignal(); 
+            setNoSignal();
         } 
 
         function selectTime(t) { 
@@ -694,7 +702,7 @@
             document.getElementById('timeBtn').classList.remove('open'); 
             document.querySelectorAll('#timeDrop .drop-item').forEach(d => d.classList.toggle('active', d.textContent === t.l)); 
             saveSelection(); 
-            if (selPair && selTime) triggerNewRandomSignal(); 
+            setNoSignal();
         } 
 
         function saveSelection() { 
@@ -714,17 +722,41 @@
         let statsUp = 0, statsDown = 0; 
         let signalHistory = []; 
         let countdownInterval = null; 
-        let signalLoopTimeout = null;
+        let prepInterval = null;
+        let generatedActiveSignal = null;
 
-        function triggerNewRandomSignal() {
+        function requestSignal() {
+            if (!selPair || !selTime) {
+                showToast("❌ Pair aur Time select karein!");
+                return;
+            }
             if (countdownInterval) clearInterval(countdownInterval);
-            if (signalLoopTimeout) clearTimeout(signalLoopTimeout);
+            if (prepInterval) clearInterval(prepInterval);
 
+            // Open popup in loading state
+            document.getElementById('popupOverlay').classList.add('show');
+            document.getElementById('popupLoadingState').style.display = 'block';
+            document.getElementById('popupSignalState').style.display = 'none';
+
+            let secondsLeft = 5;
+            document.getElementById('popupPrepSeconds').textContent = secondsLeft + 's';
+
+            prepInterval = setInterval(() => {
+                secondsLeft--;
+                document.getElementById('popupPrepSeconds').textContent = secondsLeft + 's';
+                if (secondsLeft <= 0) {
+                    clearInterval(prepInterval);
+                    processSignalGeneration();
+                }
+            }, 1000);
+        }
+
+        function processSignalGeneration() {
             const randomDirection = Math.random() < 0.5 ? 'UP' : 'DOWN';
             const signalTypes = ["ALGO V4", "SCALPING M1", "BREAKOUT PRO", "CHINESE QUANT"];
             const selectedType = signalTypes[Math.floor(Math.random() * signalTypes.length)];
 
-            const currentSignal = {
+            generatedActiveSignal = {
                 dir: randomDirection,
                 duration: selTime.v,
                 type: selectedType,
@@ -732,15 +764,30 @@
                 tl: selTime.l
             };
 
-            if (randomDirection === 'UP') statsUp++; else statsDown++; 
-            updateStats();
-            addHistory(currentSignal);
-            showPopup(currentSignal);
-            showToast('🔔 ' + selPair + ' — ' + (randomDirection === 'UP' ? '↑ CALL' : '↓ PUT'));
+            // Inject to popup layout
+            document.getElementById('popIcon').textContent = randomDirection === 'UP' ? '📈' : '📉'; 
+            document.getElementById('popDir').textContent = randomDirection === 'UP' ? '↑ CALL' : '↓ PUT'; 
+            document.getElementById('popDir').className = 'popup-pair ' + randomDirection; 
+            document.getElementById('popPairName').textContent = generatedActiveSignal.pair; 
+            document.getElementById('popDur').textContent = 'Duration: ' + generatedActiveSignal.tl; 
 
-            updateCard(currentSignal);
-            runCountdown(selTime.v, selTime.v, randomDirection);
+            // Switch view state
+            document.getElementById('popupLoadingState').style.display = 'none';
+            document.getElementById('popupSignalState').style.display = 'block';
         }
+
+        function closePopupAndStartTrade() { 
+            document.getElementById('popupOverlay').classList.remove('show'); 
+            if (generatedActiveSignal) {
+                if (generatedActiveSignal.dir === 'UP') statsUp++; else statsDown++; 
+                updateStats();
+                addHistory(generatedActiveSignal);
+                showToast('🔔 ' + generatedActiveSignal.pair + ' — ' + (generatedActiveSignal.dir === 'UP' ? '↑ CALL' : '↓ PUT'));
+
+                updateCard(generatedActiveSignal);
+                runCountdown(generatedActiveSignal.duration, generatedActiveSignal.duration, generatedActiveSignal.dir);
+            }
+        } 
 
         function setNoSignal() { 
             document.getElementById('sigPair').textContent = selPair || 'Select pair & time'; 
@@ -789,9 +836,6 @@
                     cdRemaining = 0;
                     clearInterval(countdownInterval);
                     setNoSignal();
-                    signalLoopTimeout = setTimeout(() => {
-                        if (selPair && selTime) triggerNewRandomSignal();
-                    }, 3000);
                 }
                 renderCD();
             }, 1000);
@@ -827,19 +871,6 @@
             document.getElementById('statTotal').textContent = statsUp + statsDown; 
             document.getElementById('statUp').textContent = statsUp; 
             document.getElementById('statDown').textContent = statsDown; 
-        } 
-
-        function showPopup(sig) { 
-            document.getElementById('popIcon').textContent = sig.dir === 'UP' ? '📈' : '📉'; 
-            document.getElementById('popDir').textContent = sig.dir === 'UP' ? '↑ CALL' : '↓ PUT'; 
-            document.getElementById('popDir').className = 'popup-pair ' + sig.dir; 
-            document.getElementById('popPairName').textContent = sig.pair; 
-            document.getElementById('popDur').textContent = 'Duration: ' + sig.tl; 
-            document.getElementById('popupOverlay').classList.add('show'); 
-        } 
-
-        function closePopup() { 
-            document.getElementById('popupOverlay').classList.remove('show'); 
         } 
 
         let toastTimer; 
