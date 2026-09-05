@@ -289,7 +289,7 @@
         .countdown-bar.up { background:linear-gradient(90deg,#00b248,var(--up)); }
         .countdown-bar.down { background:linear-gradient(90deg,#b20026,var(--down)); }
         
-        .countdown-num { font-family:'Orbitron',sans-serif; font-size:24px; font-weight:900; text-align:center; letter-spacing:2px; }
+        .countdown-num { font-family:'Orbitron',sans-serif; font-size:18px; font-weight:900; text-align:center; letter-spacing:1px; }
         .countdown-num.up { color:var(--up); text-shadow:0 0 15px rgba(0,230,118,0.4); }
         .countdown-num.down { color:var(--down); text-shadow:0 0 15px rgba(255,61,90,0.4); }
         .countdown-num.neutral { color:var(--muted); }
@@ -507,7 +507,7 @@
         <div class="popup">
             <div id="popupLoadingState">
                 <div class="pending-spinner" style="width: 35px; height: 35px; margin-bottom: 12px;"></div>
-                <div class="popup-title" style="letter-spacing: 2px;">ANALYZING MARKET...</div>
+                <div class="popup-title" id="popupLoadingTitle" style="letter-spacing: 2px;">ANALYZING MARKET...</div>
                 <div class="popup-pair" id="popupPrepSeconds" style="color: var(--text); font-size: 26px; margin: 15px 0;">5s</div>
             </div>
             <div id="popupSignalState" style="display: none;">
@@ -795,6 +795,7 @@
 
         let animFrames = [null, null, null]; 
         let prepInterval = null;
+        let nextSignalInterval = null;
         let generatedSignals = [];
 
         /* BUTTON DISABLE & ENABLE LOGIC */
@@ -826,6 +827,7 @@
             document.getElementById('popupSignalState').style.display = 'none';
 
             let secondsLeft = 5;
+            document.getElementById('popupLoadingTitle').textContent = "ANALYZING MARKET...";
             document.getElementById('popupPrepSeconds').textContent = secondsLeft + 's';
 
             prepInterval = setInterval(() => {
@@ -894,7 +896,6 @@
         function executeBoxTimeline(index) {
             if (index >= 3) {
                 showToast("🎉 All 3 Signal Timeline Completed!");
-                // Enable GET SIGNAL button when all 3 trades finish
                 setSignalButtonState(false);
                 return;
             }
@@ -902,6 +903,44 @@
             const sig = generatedSignals[index];
             const boxId = sig.id;
 
+            // Signal 1 starts immediately. 
+            // Signals 2 & 3 will wait 5-30s inside their own box UI (without popup)
+            if (index > 0) {
+                let randomDelay = Math.floor(Math.random() * 26) + 5; // 5 to 30 seconds
+                runNextSignalWaitInBox(boxId, randomDelay, () => {
+                    startBoxExecution(index, sig, boxId);
+                });
+            } else {
+                startBoxExecution(index, sig, boxId);
+            }
+        }
+
+        function runNextSignalWaitInBox(boxId, delaySeconds, onFinished) {
+            const card = document.getElementById(`card-${boxId}`);
+            card.className = "signal-card active-box";
+            
+            const statusTag = document.getElementById(`statusTag-${boxId}`);
+            statusTag.textContent = "WAITING";
+            statusTag.style.color = "var(--red)";
+
+            const cntNum = document.getElementById(`cntNum-${boxId}`);
+            cntNum.className = 'countdown-num neutral';
+            cntNum.textContent = `${delaySeconds}s WAIT FOR NEXT SIGNAL`;
+
+            let count = delaySeconds;
+            if(nextSignalInterval) clearInterval(nextSignalInterval);
+
+            nextSignalInterval = setInterval(() => {
+                count--;
+                cntNum.textContent = `${count}s WAIT FOR NEXT SIGNAL`;
+                if (count <= 0) {
+                    clearInterval(nextSignalInterval);
+                    onFinished();
+                }
+            }, 1000);
+        }
+
+        function startBoxExecution(index, sig, boxId) {
             const card = document.getElementById(`card-${boxId}`);
             card.className = "signal-card active-box";
             document.getElementById(`statusTag-${boxId}`).textContent = "RUNNING";
@@ -989,6 +1028,7 @@
                 animFrames[idx] = null;
             });
             if (prepInterval) clearInterval(prepInterval);
+            if (nextSignalInterval) clearInterval(nextSignalInterval);
         }
 
         let toastTimer; 
